@@ -47,5 +47,4 @@ I have provided you 50 most common passwords but you can also add your own passw
 # VIDEO DEMO: WIFI HACKING WITH CMD IN ACTION
 Small video demo from the creator himself – showing the project in action. You can also download the project files from the bottom of this post and try your hands on it. (Make sure to read the Disclaimer twice before that)
 
-
-![](https://www.youtube.com/watch?v=l1X9leGySBU)
+<a href="https://www.youtube.com/watch?v=l1X9leGySBU">quick demo!</a>
