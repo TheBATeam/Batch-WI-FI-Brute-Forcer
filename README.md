@@ -1,10 +1,10 @@
 # Batch-WI-FI-Brute-Forcer
-This project is based upon the trick that, how to hack WI-FI with CMD. The main purpose behind, creating wifi hacking tool with cmd tool is to make everyone aware that how easy it is to break a simple password. And, motivate them to keep some complex passwords – to keep them protected against it.
+This project is based upon the trick that, **how to hack WI-FI with CMD**. The main purpose behind, creating **wifi hacking tool** with cmd tool is to make everyone aware that how easy it is to break a simple password. And, motivate them to keep some complex passwords – to keep them protected against it.
 
 ![](https://i1.wp.com/www.thebateam.org/wp-content/uploads/2020/04/WifiBruteForcer_intro.gif?fit=718%2C561&ssl=1)
 
 # ABOUT PASSWORD CRACKING WITH CMD
-Some of you may know the concept of Brute Forcing, but I will explain it for the ones who don’t know. In case, you are already familiar with it – you are free to skip this part (although, you will definitely learn something new from it).
+Some of you may know the concept of **Brute Forcing**, but I will explain it for the ones who don’t know. In case, you are already familiar with it – you are free to skip this part (although, you will definitely learn something new from it).
 
 There are 3 types of attacks:
 
@@ -47,4 +47,14 @@ I have provided you 50 most common passwords but you can also add your own passw
 # VIDEO DEMO: WIFI HACKING WITH CMD IN ACTION
 Small video demo from the creator himself – showing the project in action. You can also download the project files from the bottom of this post and try your hands on it. (Make sure to read the Disclaimer twice before that)
 
-<a href="https://www.youtube.com/watch?v=l1X9leGySBU">Quick Demo by TUX!</a>
+Youtube Link- <a href="https://www.youtube.com/watch?v=l1X9leGySBU">Quick Demo by TUX!</a>
+
+# THAT EXTRA MILE – IS ALWAYS GOOD! 
+
+![](https://i2.wp.com/www.thebateam.org/wp-content/uploads/2020/04/bf2.png?w=540&ssl=1)
+
+I have provided you a key combinator app that can create random passwords with the information you gave.
+
+# THEBATEAM VIDEO REVIEW
+
+Youtube Link- <a href="https://youtu.be/80lYo4Hhmk4">Working Review – Demo video!</a>
