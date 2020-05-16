@@ -9,13 +9,13 @@ Some of you may know the concept of **Brute Forcing**, but I will explain it for
 There are 3 types of attacks:
 
 1. BRUTE FORCE ATTACK FOR PASSWORD CRACKING
-This type of attacks are simply try all possible combinations. And, it seems weird and impractical at first. But, as computers can do billion of calculations per second – so, it is not that much impractical to try out everything. The only problem is – it needs time; HELL LOT OF TIME!
+This type of attacks are simply try all possible combinations. And, it seems weird and impractical at first. But, as computers can do billion of **calculations** per second – so, it is not that much impractical to try out everything. The only problem is – it needs time; HELL LOT OF TIME!
 
 2. DICTIONARY ATTACK
-In this type of password hacking attack – again we try all passwords, but this time they are stored in a text file that you have given to the program. So, the program only refers to a few password combinations to verify the accessibility of the network.
+In this type of password **hacking attack** – again we try all **passwords**, but this time they are stored in a text file that you have given to the program. So, the program only refers to a few password combinations to verify the accessibility of the network.
 
 3. THE MASKED ATTACK
-In masked attack; we apply a bit different approach – Here the concept is to try all possible combinations in a way programmer defines. And, in this attack hackers combine some social engineering to make it better and less hard for the dumb computer.
+In masked attack; we apply a bit different approach – Here the concept is to try all possible **combinations** in a way programmer defines. And, in this attack **hackers** combine some social engineering to make it better and less hard for the dumb computer.
 
 ```For example: Try all birthdates or phone numbers.
 ```
@@ -53,7 +53,7 @@ Youtube Link- <a href="https://www.youtube.com/watch?v=l1X9leGySBU">Quick Demo b
 
 ![](https://i2.wp.com/www.thebateam.org/wp-content/uploads/2020/04/bf2.png?w=540&ssl=1)
 
-I have provided you a key combinator app that can create random passwords with the information you gave.
+I have provided you a **key combinator** app that can create random passwords with the information you gave.
 
 # THEBATEAM VIDEO REVIEW
 
