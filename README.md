@@ -58,3 +58,5 @@ I have provided you a **key combinator** app that can create random passwords wi
 # THEBATEAM VIDEO REVIEW
 
 Youtube Link- <a href="https://youtu.be/80lYo4Hhmk4">Working Review – Demo video!</a>
+
+[Read Full Article](https://www.thebateam.org/2020/04/hack-wifi-with-cmd/)
