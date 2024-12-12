@@ -396,6 +396,10 @@
 				set /a keynumber=!keynumber! + 1
 				set current_ssid=%%d
 
+				if "!current_ssid!=="" (
+					set "current_ssid=Hidden_Network"
+				)
+
 				call :character_finder_2 "!current_ssid!"
 
 			)
