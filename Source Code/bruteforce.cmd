@@ -667,7 +667,7 @@
 	:interface_detection
 	set interface_number=0
 	set temp_interface_num_for_index=1
-	for /f "tokens=1-4" %%a in ('netsh wlan show interfaces ^| findstr /L Name') do (
+	for /f "tokens=1-4*" %%a in ('netsh wlan show interfaces ^| findstr /L Name') do (
 		
 		
 		if %%c==Wi-Fi (	
@@ -678,7 +678,7 @@
 				
 				
 				set /a interface_number=!interface_number!+1
-			)else (
+			) else (
 				set interface_1=WI-FI
 				set /a temp_interface_num_for_index=!temp_interface_num_for_index!+1
 				set /a interface_number=!interface_number!+1
