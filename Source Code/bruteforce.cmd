@@ -670,7 +670,7 @@
 	for /f "tokens=1-4*" %%a in ('netsh wlan show interfaces ^| findstr /L Name') do (
 		
 		
-		if %%c==Wi-Fi (	
+		if %%c==WiFi (	
 			if not "%%d"=="" (
 				set interface_index=%%d
 				set interface_!temp_interface_num_for_index!=WI-FI !interface_index!
