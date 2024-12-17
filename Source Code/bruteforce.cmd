@@ -20,8 +20,7 @@
 	
 	
 	call :interface_detection
-	
-	
+
 	if !interface_number!==1 (
 	echo.
 	call colorchar.exe /0b " Interface Detection"
@@ -40,6 +39,58 @@
 	set interface_description=!interface_1_description!
 	set interface_mac=!interface_1_mac!
 	timeout /t 3 >nul
+
+	goto :main
+	)
+	
+	if !interface_number! gtr 1 (
+	echo.
+	call colorchar.exe /0b " Interface Detection"
+	echo.
+	echo.
+	call colorchar.exe /0e " Multiple '!interface_number!' Interfaces Found!"
+	echo.
+	timeout /t 3 >nul
+	call :interface_selection
+	goto :main
+	
+	)
+	
+	if !interface_number!==0 (
+	echo.
+	call colorchar.exe /0b " Interface Detection"	
+	echo.
+	echo.
+	call colorchar.exe /0e " WARNING"
+	echo.
+	echo  No interfaces found on this device, going to fallback^^!
+	echo.
+	timeout /t 1 >nul
+	cls
+	)
+
+	call :interface_detection_fallback
+	
+		if !interface_number!==1 (
+	echo.
+	call colorchar.exe /0b " Interface Detection"
+	echo.
+	echo.
+	call colorchar.exe /0e " Only '1' Interface Found!"
+	echo.
+	echo.
+	call colorchar.exe /0f " !interface_1_description!("
+	call colorchar.exe /09 "!interface_1_mac!"
+	call colorchar.exe /0f ")"
+	echo.
+	echo.
+	echo  Making !interface_1_description! as default Interface...
+	set interface_id=!interface_1!
+	set interface_description=!interface_1_description!
+	set interface_mac=!interface_1_mac!
+	timeout /t 3 >nul
+
+	goto :main
 	)
 	
 	if !interface_number! gtr 1 (
@@ -61,12 +112,13 @@
 	echo.
 	call colorchar.exe /0e " WARNING"
 	echo.
-	echo  No interfaces found on this device^^!
+	echo  No interfaces found on this device, you're screwed^^!
 	echo.
 	echo  Press any key to continue...
 	timeout /t 5 >nul
 	cls
-	)
+	)	
+
 	
 	
 	
@@ -396,7 +448,7 @@
 				set /a keynumber=!keynumber! + 1
 				set current_ssid=%%d
 
-				if "!current_ssid!=="" (
+				if "!current_ssid!"=="" (
 					set "current_ssid=Hidden_Network"
 				)
 
@@ -646,23 +698,7 @@
 		del var.txt
 	goto :eof
 	
-	
-	
-	
-	
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		
 	
 	:interface_detection
 	set interface_number=0
@@ -704,7 +740,48 @@
 	set temp_interface_num_for_mac=1
 	)
 	goto :eof	
+
+
+	:interface_detection_fallback
+	set interface_number=0
+	set temp_interface_num_for_index=1
+	for /f "tokens=1-4*" %%a in ('netsh wlan show interfaces ^| findstr /L Name') do (
+		
+		
+		if %%c==WiFi (	
+			if not "%%d"=="" (
+				set interface_index=%%d
+				set interface_!temp_interface_num_for_index!=WI-FI !interface_index!
+				set /a temp_interface_num_for_index=!temp_interface_num_for_index!+1
+				
+				
+				set /a interface_number=!interface_number!+1
+			) else (
+				set interface_1=WI-FI
+				set /a temp_interface_num_for_index=!temp_interface_num_for_index!+1
+				set /a interface_number=!interface_number!+1
+			)
+		)
+	)
 	
+	if !interface_number! gtr 0 (
+			set /a temp_interface_num_for_description=1
+			for /f "tokens=1-5" %%a in ('netsh wlan show interfaces ^| findstr /L Description') do (
+				set interface_!temp_interface_num_for_description!_description=%%c %%d
+				set /a temp_interface_num_for_description=!temp_interface_num_for_description!+1
+			)
+		set temp_interface_num_for_description=1
+	)
+	
+	if !interface_number! gtr 0 (
+		set /a temp_interface_num_for_mac=1
+		for /f "tokens=1-5" %%a in ('netsh wlan show interfaces ^| findstr /L Physical') do (
+			set interface_!temp_interface_num_for_mac!_mac=%%d
+			set /a temp_interface_num_for_mac=!temp_interface_num_for_mac!+1
+		)
+	set temp_interface_num_for_mac=1
+	)
+	goto :eof
 	
 	
 	
