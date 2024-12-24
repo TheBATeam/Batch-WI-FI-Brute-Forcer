@@ -19,7 +19,7 @@ color 0f
 
 cd /D %~dp0
 
-if not exist importwifi.xml (
+if not exist "importwifi.xml" (
     call :exit_fatal "importwifi.xml is missing. Exiting..."
 )
 
@@ -33,7 +33,7 @@ set wifi_target=not_defined
 
 set attack_counter_option=0
 
-if not exist wordlist.txt (
+if not exist "wordlist.txt" (
     set wordlist_file=not_defined
 ) else (
     set wordlist_file=wordlist.txt
@@ -61,10 +61,10 @@ goto :eof
                 set interface[!interface_temp_index!]_id=%%c %%d
             )
         )
-        if %%a==Description (
+        if "%%a"=="Description" (
             set interface[!interface_temp_index!]_description=%%c %%d
         )
-        if %%a==Physical (
+        if "%%a"=="Physical" (
             set interface[!interface_temp_index!]_mac=%%d
         )	
 
@@ -169,7 +169,7 @@ goto :eof
     call :color_echo . cyan " Interface Init"
     echo.
     echo.
-	if !interface_number! equ 1 (
+	if "!interface_number!" equ "1" (
 
         call :color_echo . yellow " Only '1' Interface Found!"
         echo.
@@ -186,7 +186,7 @@ goto :eof
         timeout /t 3 >nul
 	)
 	
-	if !interface_number! gtr 1 (
+	if "!interface_number!" gtr "1" (
 
         call :color_echo . yellow " Multiple '!interface_number!' Interfaces Found!"
         echo.
@@ -195,7 +195,7 @@ goto :eof
         
 	)
 	
-	if !interface_number!==0 (
+	if "!interface_number!"=="0" (
 
         call :color_echo . yellow "WARNING"
         echo.
@@ -240,8 +240,8 @@ goto :eof
         goto :interface_selection
     )
 
-    if !program_prompt_input! leq !interface_number_zero_indexed! (
-        if !program_prompt_input! geq 0 (
+    if "!program_prompt_input!" leq "!interface_number_zero_indexed!" (
+        if "!program_prompt_input!" geq "0" (
             echo.
             echo Making !interface[%program_prompt_input%]_description! the interface...
             set interface_id=!interface[%program_prompt_input%]_id!
@@ -261,7 +261,7 @@ goto :eof
         )
     ) else (
 
-        if !program_prompt_input! equ !cancel_index! (
+        if "!program_prompt_input!" equ "!cancel_index!" (
             set interface_id=not_defined
             set interface_description=not_defined
             set interface_mac=not_defined
@@ -413,8 +413,8 @@ goto :mainmenu
     if "!program_prompt_input!" equ "!cancel_index!" (
         goto :eof
     )
-    if !program_prompt_input! leq !wifi_index! (
-            if !program_prompt_input! geq 0 (
+    if "!program_prompt_input!" leq "!wifi_index!" (
+            if "!program_prompt_input!" geq "0" (
             set "wifi_target=!wifi[%program_prompt_input%]_ssid!"
             goto :eof
         )
@@ -660,7 +660,7 @@ goto :eof
     echo.
     call :program_prompt
     echo.
-    if not exist !program_prompt_input! (
+    if not exist "!program_prompt_input!" (
         call :color_echo . red "Provided path does not resolve to a file"
         timeout /t 2 >nul
     ) else (
@@ -685,7 +685,7 @@ goto :eof
     echo.
     echo %program_prompt_input%| findstr /r "^[0-9]*$" >nul
     
-    if %errorlevel% equ 0 (
+    if "%errorlevel%" equ "0" (
         set attack_counter_option=!program_prompt_input!
     ) else (
         call :color_echo . red "Provided input is not a valid number"
@@ -707,7 +707,7 @@ goto :eof
 
         for /f "tokens=1-5" %%a in ('netsh wlan show interfaces ^| findstr /L "Name State"') do ( 
         
-        if !interface_state_check!==true (
+        if "!interface_state_check!"=="true" (
             set interface_state=%%c
             goto :skip_find_connection_state
         )
@@ -721,27 +721,27 @@ goto :eof
         )
     )
 	:skip_find_connection_state
-    if !interface_state!==associating (
+    if "!interface_state!"=="associating" (
         call :color_echo . yellow "Associating"
         echo.
     )
-    if !interface_state!==disconnecting (
+    if "!interface_state!"=="disconnecting" (
         call :color_echo . red "Disconnecting..."
         echo.
     )
-    if !interface_state!==disconnected (
+    if "!interface_state!"=="disconnected" (
         call :color_echo . red "Disconnected"
         echo.
     )
-    if !interface_state!==authenticating (
+    if "!interface_state!"=="authenticating" (
         call :color_echo . blue "Authenticating"
         echo.
     )
-    if !interface_state!==connecting (
+    if "!interface_state!"=="connecting" (
         call :color_echo . yellow "Connecting"
         echo.
     )
-    if !interface_state!==connected (
+    if "!interface_state!"=="connected" (
         call :color_echo . green "Connected"
         echo.
         timeout /t 2 /nobreak>nul
