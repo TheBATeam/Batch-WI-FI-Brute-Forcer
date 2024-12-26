@@ -1,62 +1,95 @@
-# Batch-WI-FI-Brute-Forcer
-This project is based upon the trick that, **how to hack WI-FI with CMD**. The main purpose behind, creating **wifi hacking tool** with cmd tool is to make everyone aware that how easy it is to break a simple password. And, motivate them to keep some complex passwords – to keep them protected against it.
+# Batch Wi-Fi Brute Forcer
+An active attack tool against Wi-Fi networks with internal CMD commands.
 
-![](https://i1.wp.com/www.thebateam.org/wp-content/uploads/2020/04/WifiBruteForcer_intro.gif?fit=718%2C561&ssl=1)
+This program is created to be a proof of concept that it is possible
+to write a working Wi-Fi attack tool with Batchfiles since there 
+are countless examples on the internet that claims to be legit
+hacking tools, working on CMD. While this tool does not claim
+a 100% success ratio, it still works if the target Wi-Fi has
+weak password. :)
 
-# ABOUT PASSWORD CRACKING WITH CMD
-Some of you may know the concept of **Brute Forcing**, but I will explain it for those who don’t. In case, you are already familiar with it – you are free to skip this part (although, you will definitely learn something new from it).
+## Usage
 
-There are 3 types of attacks:
+### Interface initialization
+The program automatically detects your wireless interfaces when you execute the batch file.
+If it finds only one, it will select it as default. If there are multiple interfaces,
+the program will ask you to choose one. If none exist, it will stay "not_defined".
 
-1. BRUTE FORCE ATTACK FOR PASSWORD CRACKING
-This attack simply tries all possible combinations. And, it seems weird and impractical at first. But, as computers can do billions of **calculations** per second – so, it is not actually impractical to try out everything. The only problem is – it needs time; HELL LOT OF TIME!
+> You can later change the interface by typing `interface` on the main menu.
+> This will bring the interface initialization screen back.
 
-2. DICTIONARY ATTACK
-This type of password **hacking attack** – again tries all **passwords**, but this time they are stored in a text file that you have given to the program. So, the program only refers to a few password combinations to verify the accessibility of the network.
+### Scan
+When you type `scan` at the main menu, the program will enumerate all Wi-Fi networks
+available from the selected wireless interface. You can choose one by typing the number
+associated with an SSID.
 
-3. THE MASKED ATTACK
-This attack; uses a bit different approach – Here the concept is to try all possible **combinations** in a way programmer defines. And, in this attack **hackers** combine some social engineering to make it better and less hard for the dumb computer.
+> No Name could mean that the network is hidden. You cannot attack that network.
 
-```For example: Try all birthdates or phone numbers.
+> Performing a scan disconnects the interface from the network that it has connected previously.
+
+### Selecting a wordlist
+A wordlist file is already provided in the repository. If you want to use a custom
+wordlist, you have to specify the file you are going to use by typing `wordlist` on the 
+main menu and then typing the absolute or relative path of the wordlist file.
+
+### Attacking
+Simply type `attack` and the program will show you a warning screen that this process is going
+to delete the profile associated with the SSID if you have connected to it before.
+It means you will lose the password you entered while connecting to that SSID before.
+Save it before using the attack.
+
+### Counter
+When a connection is attempted with `netsh` to a network, it takes time to establish the connection. To check whether the connection is successful,
+the program repeatedly queries the connection status of the selected interface. A counter value controls how many times this query will be done.
+If not changed, the counter value is 10, and counts down after each query for each password combination. 
+
+> If an authentication or association is detected, this value is increased by 5 to ensure a successful connection.
+
+## Limitations
+- This program has been tested unsuccessfully on Windows 7 and tested successfully on Windows 10 and 11. Since some commands may differ in terms of output between Windows versions, it is not expected to work on previous versions.
+
+- ANSI escape sequences used in the terminal were added to the Windows Console in the Windows 10 version 1511, previous versions are not expected to run this program.
+
+- There is a strict dependency on the command line utility `netsh`, meaning that it cannot understand "Unicode" characters. Only ASCII characters are supported for network names.
+
+- The command line utilities cannot be forced to output English-only text, which means parsing particularly depends on English-based output from command line utilities. Any other system language is not expected to be compatible with this program.
+
+- Speed is significantly slow due to its nature.
+
+- Cannot attack hidden networks.
+
+## Result file
+If an attack is successful, the result is automatically written to `result.txt`.
+
+
+## Help screen
+```txt
+Commands
+
+ - help             : Displays this page
+ - wordlist         : Provide a wordlist file     
+ - scan             : Performs a WI-FI scan       
+ - interface        : Open Interface Management   
+ - attack           : Attacks selected WI-FI      
+ - counter          : Sets the attack counter     
+ - exit             : Close the program
+
+ For more information, please refer to "README.md".
+
+ More projects from TechnicalUserX:
+ https://github.com/TechnicalUserX
+
+
+Press any key to continue...
 ```
 
-# HOW TO HACK WIFI WITH CMD? – THE ALGORITHM
-So, basically – In this part, you’ll know how it is possible to hack wifi password with CMD and it is not another fake trick to fool you guys! Let’s have a look at the basic parts of this main project:
+## Contributors
 
-WI-FI Brute Forcer has 4 main parts:
-1.Interface Detection
-2.Interface Selection
-3.WI-FI Scanning and Selecting
-4.Attacking
+Huge thanks to everyone for their contributions to this project.
 
-![](https://i2.wp.com/www.thebateam.org/wp-content/uploads/2020/04/bf_thebateam_1-1.jpg?w=521&ssl=1)
+- [TheKvc](https://github.com/TheKvc)
+- [Ankitamehra93](https://github.com/Ankitamehra93)
+- [lioen-dev](https://github.com/lioen-dev)
+- [akshatbhatter1](https://github.com/akshatbhatter1)
 
-Program detects your WI-FI hardware and if it finds multiple interfaces, it will ask you to select one.
-You can select it later on (it is required for scanning and attacking.)
-
-![](https://i0.wp.com/www.thebateam.org/wp-content/uploads/2020/04/bf_thebateam_2-1.jpg?w=541&ssl=1)
-
-Then you should perform a WI-FI scan to select target.
-
-![](https://i0.wp.com/www.thebateam.org/wp-content/uploads/2020/04/bf_thebateam_3-1.jpg?w=556&ssl=1)
-
-
-Here we go! Start the attacking process and sit back until it finishes.
-I have provided you 50 most common passwords but you can also add your own password lists.
-
-# VIDEO DEMO: WIFI HACKING WITH CMD IN ACTION
-Small video demo from the creator – showing the project in action. You can also download the project files from the bottom of this post and try your hands on it. (Make sure to read the Disclaimer twice before that)
-
-Youtube Link- <a href="https://www.youtube.com/watch?v=l1X9leGySBU">Quick Demo by TUX!</a>
-
-# THAT EXTRA MILE – IS ALWAYS GOOD! 
-
-![](https://i2.wp.com/www.thebateam.org/wp-content/uploads/2020/04/bf2.png?w=540&ssl=1)
-
-I have provided you a **key combinator** app that can create random passwords with the information you gave.
-
-# THEBATEAM VIDEO REVIEW
-
-Youtube Link- <a href="https://youtu.be/80lYo4Hhmk4">Working Review – Demo video!</a>
-
-[Read Full Article](https://www.thebateam.org/2020/04/hack-wifi-with-cmd/)
+**Special thanks to the [TheBATeam](https://github.com/TheBATeam), and AACINI.**
