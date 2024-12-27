@@ -186,7 +186,7 @@ goto :eof
         timeout /t 3 >nul
 	)
 	
-	if "!interface_number!" gtr "1" (
+	if !interface_number! gtr 1 (
 
         call :color_echo . yellow " Multiple '!interface_number!' Interfaces Found!"
         echo.
@@ -195,7 +195,7 @@ goto :eof
         
 	)
 	
-	if "!interface_number!"=="0" (
+	if !interface_number! equ 0 (
 
         call :color_echo . yellow "WARNING"
         echo.
@@ -240,8 +240,8 @@ goto :eof
         goto :interface_selection
     )
 
-    if "!program_prompt_input!" leq "!interface_number_zero_indexed!" (
-        if "!program_prompt_input!" geq "0" (
+    if !program_prompt_input! leq !interface_number_zero_indexed! (
+        if !program_prompt_input! geq 0 (
             echo.
             echo Making !interface[%program_prompt_input%]_description! the interface...
             set interface_id=!interface[%program_prompt_input%]_id!
@@ -249,7 +249,7 @@ goto :eof
             set interface_mac=!interface[%program_prompt_input%]_mac!
             timeout /t 3 >nul
         ) else (
-            if "!program_prompt_input!" equ "!cancel_index!" (
+            if !program_prompt_input! equ !cancel_index! (
                 set interface_id=not_defined
                 set interface_description=not_defined
                 set interface_mac=not_defined
@@ -261,7 +261,7 @@ goto :eof
         )
     ) else (
 
-        if "!program_prompt_input!" equ "!cancel_index!" (
+        if !program_prompt_input! equ !cancel_index! (
             set interface_id=not_defined
             set interface_description=not_defined
             set interface_mac=not_defined
@@ -413,8 +413,8 @@ goto :mainmenu
     if "!program_prompt_input!" equ "!cancel_index!" (
         goto :eof
     )
-    if "!program_prompt_input!" leq "!wifi_index!" (
-            if "!program_prompt_input!" geq "0" (
+    if !program_prompt_input! leq !wifi_index! (
+            if !program_prompt_input! geq 0 (
             set "wifi_target=!wifi[%program_prompt_input%]_ssid!"
             goto :eof
         )
