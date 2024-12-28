@@ -9,8 +9,8 @@
 :: a 100% success ratio, it still works if the target Wi-Fi has
 :: weak password. :)
 
-:: There is already a wordlist file in the repository but you are free
-:: to use your own wordlists.
+:: There is already a wordlist file in the repository but you are
+:: free to use your own wordlists.
 
 cls
 setlocal enabledelayedexpansion
