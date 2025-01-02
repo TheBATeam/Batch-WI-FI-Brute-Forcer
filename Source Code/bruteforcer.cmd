@@ -17,7 +17,7 @@ setlocal enabledelayedexpansion
 title Batch Wi-Fi Brute Forcer
 color 0f
 
-cd /D %~dp0
+cd /D "%~dp0"
 
 if not exist importwifi.xml (
     call :exit_fatal "importwifi.xml is missing. Exiting..."
