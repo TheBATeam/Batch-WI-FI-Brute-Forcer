@@ -393,7 +393,7 @@ goto :mainmenu
         call :color_echo . magenta "%%a) "
 
         if "!wifi[%%a]_ssid!" equ "" (
-            call :color_echo . red "No Name "
+            call :color_echo . red "Hidden Network "
         ) else (
             call :color_echo . white "!wifi[%%a]_ssid! "
         )
