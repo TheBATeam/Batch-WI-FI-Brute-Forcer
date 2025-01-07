@@ -53,7 +53,7 @@ goto :eof
     set interface_number=0
 
     for /f "tokens=1-4" %%a in ('netsh wlan show interfaces ^| findstr /L "Name Description Physical"') do (
-        if "%%c"=="Wi-Fi" (
+        if "%%a"=="Name" (
             set /a interface_temp_index=!interface_temp_index!+1
             if "%%d"=="" (
                 set interface[!interface_temp_index!]_id=%%c
