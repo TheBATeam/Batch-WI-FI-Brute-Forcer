@@ -351,8 +351,8 @@ goto :eof
     call :program_prompt
     echo.
 
-    if "!program_prompt_input!" equ "scan" (
-        call :scan
+    if "!program_prompt_input!" equ "" (
+        call :
         goto :mainmenu
     )
 
@@ -392,6 +392,15 @@ goto :mainmenu
 
 :scan
     cls
+    if "!interface_id!" equ "not_defined" (
+        call :color_echo . red "You have to select an interface to perform a scan"
+        set wifi_target=not_defined
+        echo.
+        echo.
+        pause
+        goto :eof
+    )
+
     netsh wlan disconnect interface="%interface_id%" > nul
 
     call :interface_find_state
@@ -401,14 +410,7 @@ goto :mainmenu
         goto :scan
     )
 
-    if "!interface_id!" equ "not_defined" (
-        call :color_echo . red "You have to select an interface to perform a scan"
-        set wifi_target=not_defined
-        echo.
-        echo.
-        pause
-        goto :eof
-    )
+
 
     echo.
     call :color_echo . cyan "Possible Wi-Fi Networks"
