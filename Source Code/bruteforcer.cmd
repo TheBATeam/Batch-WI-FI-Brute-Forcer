@@ -403,7 +403,7 @@ goto :mainmenu
     )
 
     netsh wlan disconnect interface="%interface_id%" > nul
-
+    timeout /t 1 /nobreak > nul
     call :interface_find_state
 
     if "%interface_state%" neq "disconnected" (
@@ -648,7 +648,7 @@ goto :eof
 	netsh wlan connect name="!wifi_target!" interface="!interface_id!" >nul
 
     if "%attack_counter_option%" equ "0" (
-        set attack_counter=9
+        set attack_counter=5
     ) else (
         set attack_counter=!attack_counter_option!
     )
