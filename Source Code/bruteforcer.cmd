@@ -351,8 +351,8 @@ goto :eof
     call :program_prompt
     echo.
 
-    if "!program_prompt_input!" equ "" (
-        call :
+    if "!program_prompt_input!" equ "scan" (
+        call :scan
         goto :mainmenu
     )
 
