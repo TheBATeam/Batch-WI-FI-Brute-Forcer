@@ -393,6 +393,7 @@ goto :mainmenu
 :scan
     cls
     if "!interface_id!" equ "not_defined" (
+	echo.
         call :color_echo . red "You have to select an interface to perform a scan"
         set wifi_target=not_defined
         echo.
