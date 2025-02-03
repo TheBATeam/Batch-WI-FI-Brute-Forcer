@@ -41,7 +41,7 @@ Save it before using the attack.
 ### Counter
 When a connection is attempted with `netsh` to a network, it takes time to establish the connection. To check whether the connection is successful,
 the program repeatedly queries the connection status of the selected interface. A counter value controls how many times this query will be done.
-If not changed, the counter value is 10, and counts down after each query for each password combination. 
+If not changed, the counter value is 5, and counts down after each query for each password combination. 
 
 > If an authentication or association is detected, this value is increased by 5 to ensure a successful connection.
 
