@@ -403,7 +403,6 @@ goto :mainmenu
     )
 
     netsh wlan disconnect interface="%interface_id%" > nul
-    timeout /t 1 /nobreak > nul
     call :interface_find_state
 
     if "%interface_state%" neq "disconnected" (
@@ -666,6 +665,7 @@ goto :eof
         call :color_echo . magenta "!attack_counter!"
         call :color_echo . white ") "
 
+        timeout /t 1 /nobreak > nul
         call :interface_find_state
 
         if "!interface_state!"=="disconnecting" (
