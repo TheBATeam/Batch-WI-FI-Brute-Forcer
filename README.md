@@ -52,8 +52,6 @@ If not changed, the counter value is 5, and counts down after each query for eac
 
 - There is a strict dependency on the command line utility `netsh`, meaning that it cannot understand "Unicode" characters. Only ASCII characters are supported for network names.
 
-- The command line utilities cannot be forced to output English-only text, which means parsing particularly depends on English-based output from command line utilities. Any other system language is not expected to be compatible with this program.
-
 - Speed is significantly slow due to its nature.
 
 - Cannot attack hidden networks.
