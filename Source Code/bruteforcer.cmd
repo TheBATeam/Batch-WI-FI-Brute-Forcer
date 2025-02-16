@@ -25,7 +25,7 @@ if exist "importwifi_attempt.xml" (del importwifi_attempt.xml)
 if exist "importwifi_prepared.xml" (del importwifi_prepared.xml)
 
 ::This sets the code page to English (US) and forces CMD to output in English where applicable.
-set _ver=20250210
+set _ver=20250216
 chcp 437 >nul
 set LANG=en_US
 set "_PASSWORD_FOUND_FILE=%~dp0Result_!wifi_target!_PASSWORD.txt"

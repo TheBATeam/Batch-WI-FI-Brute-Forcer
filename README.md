@@ -71,21 +71,13 @@ Commands
  - attack           : Attacks selected WI-FI      
  - counter          : Sets the attack counter     
  - exit             : Close the program
-
- For more information, please refer to "README.md".
-
- More projects from TechnicalUserX:
- https://github.com/TechnicalUserX
-
-
-Press any key to continue...
 ```
 
 ## Contributors
 
 Huge thanks to everyone for their contributions to this project.
 
-- [TheKvc](https://github.com/TheKvc)
+- [TheKvc](https://github.com/TheKvc) aka Batch-Man (www.batch-man.com)
 - [Ankitamehra93](https://github.com/Ankitamehra93)
 - [lioen-dev](https://github.com/lioen-dev)
 - [akshatbhatter1](https://github.com/akshatbhatter1)
