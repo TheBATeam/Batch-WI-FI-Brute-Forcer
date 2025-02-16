@@ -665,134 +665,26 @@ cls
 echo.
 echo !_cyan!Wordlist
 echo.
-echo Please provide a valid wordlist
+echo Please provide the path to the wordlist file or type 'cancel' to return to the previous menu.
 echo.
-echo !_yellow!Current Wordlist: !_white!!wordlist_file!
-echo.
-echo Please select the input type:
-echo 1. URL
-echo 2. Path
-echo 3. Choose from existing files in the current directory
-echo 4. Download NEW wordlist from selected sources - compromised password data
-echo 5. Cancel and return to the previous menu
-echo.
-echo Example: 1
 call :program_prompt
 
-if "!program_prompt_input!" equ "1" (
-    echo Please provide the URL:
-    echo Example: http://example.com/wordlist.txt
-    call :program_prompt
-    echo.
-    set url_input=!program_prompt_input!
-    
-    echo !_cyan!Available Wordlists in Current Directory:
-    echo !_yellow!----------------------------------------!_cyan!
-    dir /B *.txt
-    echo !_yellow!----------------------------------------
-    echo !_cyan!Please provide a name for the downloaded wordlist:
-    call :program_prompt
-    set download_name=!program_prompt_input!
-    
-    curl -o "!download_name!" !url_input!
-	timeout /t 3 >nul
-    if exist "!download_name!" (
-        set wordlist_file=!download_name!
-        echo Wordlist downloaded and selected successfully.
-        timeout /t 3 >nul
-		goto :eof
-    )
-	echo !_red!Failed to download the wordlist. Please try again.
-	timeout /t 3 >nul
-	goto :wordlist
-)
-
-if "!program_prompt_input!" equ "2" (
-    echo Please provide the file path:
-    echo Example: "C:\path\to\wordlist.txt"
-    call :program_prompt
-    echo.
-	set program_prompt_input=!program_prompt_input:"=!
-    if exist "!program_prompt_input!" (
-        set wordlist_file=!program_prompt_input!
-        echo Wordlist file selected successfully.
-		goto :eof
-    ) else (
-        echo !_red!Provided path does not resolve to a file
-        timeout /t 2 >nul
-		goto :wordlist
-    )
-)
-
-if "!program_prompt_input!" equ "3" (
-    echo !_cyan!Available Wordlists in Current Directory:
-    echo !_yellow!----------------------------------------
-    set /a index=1
-    for %%f in (*.txt) do (
-        echo !_yellow!!index!. !_white!%%f
-        set "file[!index!]=%%f"
-        set /a index+=1
-    )
-    echo !_yellow!----------------------------------------
-    echo !_cyan!Please provide the Serial number of the wordlist to select:
-	echo !Yellow!Example: 1
-    call :program_prompt
-    echo.
-    set /a selected_index=!program_prompt_input!
-    if !selected_index! geq 1 if !selected_index! lss !index! (
-        set wordlist_file=!file[%selected_index%]!
-        echo Wordlist file selected successfully: !wordlist_file!
-		timeout /t 3 >nul
-		goto :eof
-    ) else (
-        echo !_red!Invalid selection. Please choose a valid number.
-        timeout /t 2 >nul
-        goto :wordlist
-    )
-)
-
-if "!program_prompt_input!" equ "4" (
-    echo !_cyan!Available URLs for download:
-    echo !_yellow!----------------------------------------!_cyan!
-    echo 1. 500 worst passwords
-    echo 2. Darkweb 2017 top 10000 passwords
-    echo 3. xato - 10 million passwords
-    echo !_yellow!----------------------------------------
-    echo !_cyan!Please provide the number of the URL to download:
-    call :program_prompt
-    echo.
-    if "!program_prompt_input!" equ "1" (set "url_input=https://github.com/danielmiessler/SecLists/blob/master/Passwords/500-worst-passwords.txt")
-    if "!program_prompt_input!" equ "2" (set "url_input=https://github.com/danielmiessler/SecLists/blob/master/Passwords/darkweb2017-top10000.txt")
-    if "!program_prompt_input!" equ "3" (set "url_input=https://raw.githubusercontent.com/danielmiessler/SecLists/refs/heads/master/Passwords/xato-net-10-million-passwords-1000000.txt")
-
-    if defined url_input (
-        echo Please provide a name for the downloaded wordlist:
-        call :program_prompt
-        echo.
-        set download_name=!program_prompt_input!
-        
-        curl -o "!download_name!" !url_input!
-        if exist "!download_name!" (
-            set wordlist_file=!download_name!
-            echo Wordlist downloaded and selected successfully.
-            timeout /t 3 >nul
-        )
-    ) else (
-        echo !_red!Invalid selection. Please choose a valid number.
-        timeout /t 2 >nul
-        goto :wordlist
-    )
-)
-
-if "!program_prompt_input!" equ "5" (
+if /i "!program_prompt_input!" equ "cancel" (
     echo Returning to the previous menu...
     timeout /t 2 >nul
     goto :eof
 )
 
-echo !_red!Invalid selection. Please choose either 1, 2, 3, 4, or 5.
-timeout /t 2 >nul
-goto :wordlist
+set program_prompt_input=!program_prompt_input:"=!
+if exist "!program_prompt_input!" (
+    set wordlist_file=!program_prompt_input!
+    echo Wordlist file selected successfully.
+    goto :eof
+) else (
+    echo !_red!Provided path does not resolve to a file
+    timeout /t 2 >nul
+    goto :wordlist
+)
 
 :counter
 cls
