@@ -671,7 +671,7 @@ echo.
 call :program_prompt
 echo.
 if not exist "!program_prompt_input!" (
-	echo !_red!"Provided path does not resolve to a file"
+	echo !_red!Provided path does not resolve to a file
 	timeout /t 2 >nul
 ) else (
 	set wordlist_file=!program_prompt_input!
