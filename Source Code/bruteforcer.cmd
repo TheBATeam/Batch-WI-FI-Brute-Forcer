@@ -25,7 +25,7 @@ if exist "importwifi_attempt.xml" (del importwifi_attempt.xml)
 if exist "importwifi_prepared.xml" (del importwifi_prepared.xml)
 
 ::This sets the code page to English (US) and forces CMD to output in English where applicable.
-set _ver=20250216
+set _ver=20250217
 chcp 437 >nul
 set LANG=en_US
 set "_PASSWORD_FOUND_FILE=%~dp0Result_!wifi_target!_PASSWORD.txt"
@@ -191,7 +191,6 @@ if "!_Interface_Index!" == "-1" (
 	pause
 	cls
 )
-
 goto :eof
 
 
@@ -573,8 +572,8 @@ echo !_Yellow!========================================
 echo.
 echo !_Yellow!Looks like, You need another password list...
 echo.
-echo !_White!In future update, we will add feature to download
-echo another passowrd list, if possible.
+echo !_White!Download and try another password list.
+echo !_cyan!In the mainmenu, type !_Yellow!wordlist!_cyan! to select a new wordlist.
 echo.
 netsh wlan delete profile "!wifi_target!" interface="!interface_name!">nul
 pause
@@ -633,7 +632,7 @@ echo !_Yellow!==================================================================
 echo !_cyan!				Commands
 echo !_Yellow!================================================================================
 echo.
-echo Version: !_Green!!_ver!
+echo  Version: !_Green!!_ver!
 echo.
 echo  !_Yellow!help             !_White!: Displays this page
 echo  !_Yellow!wordlist         !_White!: Provide a wordlist file
@@ -668,16 +667,132 @@ echo !_cyan!Wordlist
 echo.
 echo Please provide a valid wordlist
 echo.
-call :program_prompt
+echo !_yellow!Current Wordlist: !_white!!wordlist_file!
 echo.
-if not exist "!program_prompt_input!" (
-	echo !_red!Provided path does not resolve to a file
-	timeout /t 2 >nul
-) else (
-	set wordlist_file=!program_prompt_input!
-	goto :eof
+echo Please select the input type:
+echo 1. URL
+echo 2. Path
+echo 3. Choose from existing files in the current directory
+echo 4. Download NEW wordlist from selected sources - compromised password data
+echo 5. Cancel and return to the previous menu
+echo.
+echo Example: 1
+call :program_prompt
+
+if "!program_prompt_input!" equ "1" (
+    echo Please provide the URL:
+    echo Example: http://example.com/wordlist.txt
+    call :program_prompt
+    echo.
+    set url_input=!program_prompt_input!
+    
+    echo !_cyan!Available Wordlists in Current Directory:
+    echo !_yellow!----------------------------------------!_cyan!
+    dir /B *.txt
+    echo !_yellow!----------------------------------------
+    echo !_cyan!Please provide a name for the downloaded wordlist:
+    call :program_prompt
+    set download_name=!program_prompt_input!
+    
+    curl -o "!download_name!" !url_input!
+	timeout /t 3 >nul
+    if exist "!download_name!" (
+        set wordlist_file=!download_name!
+        echo Wordlist downloaded and selected successfully.
+        timeout /t 3 >nul
+		goto :eof
+    )
+	echo !_red!Failed to download the wordlist. Please try again.
+	timeout /t 3 >nul
+	goto :wordlist
 )
-goto :eof
+
+if "!program_prompt_input!" equ "2" (
+    echo Please provide the file path:
+    echo Example: "C:\path\to\wordlist.txt"
+    call :program_prompt
+    echo.
+	set program_prompt_input=!program_prompt_input:"=!
+    if exist "!program_prompt_input!" (
+        set wordlist_file=!program_prompt_input!
+        echo Wordlist file selected successfully.
+		goto :eof
+    ) else (
+        echo !_red!Provided path does not resolve to a file
+        timeout /t 2 >nul
+		goto :wordlist
+    )
+)
+
+if "!program_prompt_input!" equ "3" (
+    echo !_cyan!Available Wordlists in Current Directory:
+    echo !_yellow!----------------------------------------
+    set /a index=1
+    for %%f in (*.txt) do (
+        echo !_yellow!!index!. !_white!%%f
+        set "file[!index!]=%%f"
+        set /a index+=1
+    )
+    echo !_yellow!----------------------------------------
+    echo !_cyan!Please provide the Serial number of the wordlist to select:
+	echo !Yellow!Example: 1
+    call :program_prompt
+    echo.
+    set /a selected_index=!program_prompt_input!
+    if !selected_index! geq 1 if !selected_index! lss !index! (
+        set wordlist_file=!file[%selected_index%]!
+        echo Wordlist file selected successfully: !wordlist_file!
+		timeout /t 3 >nul
+		goto :eof
+    ) else (
+        echo !_red!Invalid selection. Please choose a valid number.
+        timeout /t 2 >nul
+        goto :wordlist
+    )
+)
+
+if "!program_prompt_input!" equ "4" (
+    echo !_cyan!Available URLs for download:
+    echo !_yellow!----------------------------------------!_cyan!
+    echo 1. 500 worst passwords
+    echo 2. Darkweb 2017 top 10000 passwords
+    echo 3. xato - 10 million passwords
+    echo !_yellow!----------------------------------------
+    echo !_cyan!Please provide the number of the URL to download:
+    call :program_prompt
+    echo.
+    if "!program_prompt_input!" equ "1" (set "url_input=https://github.com/danielmiessler/SecLists/blob/master/Passwords/500-worst-passwords.txt")
+    if "!program_prompt_input!" equ "2" (set "url_input=https://github.com/danielmiessler/SecLists/blob/master/Passwords/darkweb2017-top10000.txt")
+    if "!program_prompt_input!" equ "3" (set "url_input=https://raw.githubusercontent.com/danielmiessler/SecLists/refs/heads/master/Passwords/xato-net-10-million-passwords-1000000.txt")
+
+    if defined url_input (
+        echo Please provide a name for the downloaded wordlist:
+        call :program_prompt
+        echo.
+        set download_name=!program_prompt_input!
+        
+        curl -o "!download_name!" !url_input!
+        if exist "!download_name!" (
+            set wordlist_file=!download_name!
+            echo Wordlist downloaded and selected successfully.
+            timeout /t 3 >nul
+        )
+    ) else (
+        echo !_red!Invalid selection. Please choose a valid number.
+        timeout /t 2 >nul
+        goto :wordlist
+    )
+)
+
+if "!program_prompt_input!" equ "5" (
+    echo Returning to the previous menu...
+    timeout /t 2 >nul
+    goto :eof
+)
+
+echo !_red!Invalid selection. Please choose either 1, 2, 3, 4, or 5.
+timeout /t 2 >nul
+goto :wordlist
 
 :counter
 cls
