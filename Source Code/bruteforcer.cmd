@@ -98,7 +98,7 @@ for /f "skip=2 tokens=1,* delims=:" %%A in ('netsh wlan show interfaces') do (
 				REM Echo Name: %%B
 				Set _Temp=1
 				Set /A _Interface_Index+=1
-			)		
+			)
 			set _Count=0
 		)
 		
