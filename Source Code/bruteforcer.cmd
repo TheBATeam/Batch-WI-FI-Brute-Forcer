@@ -27,7 +27,6 @@ if exist "importwifi_prepared.xml" (del importwifi_prepared.xml)
 ::This sets the code page to English (US) and forces CMD to output in English where applicable.
 set _ver=20250217
 chcp 437 >nul
-set LANG=en_US
 set "_PASSWORD_FOUND_FILE=%~dp0Result_!wifi_target!_PASSWORD.txt"
 
 ::Including VT100 Library by Kvc for text decoration ...
