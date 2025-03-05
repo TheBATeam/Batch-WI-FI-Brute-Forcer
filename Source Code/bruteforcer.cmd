@@ -25,7 +25,7 @@ if exist "importwifi_attempt.xml" (del importwifi_attempt.xml)
 if exist "importwifi_prepared.xml" (del importwifi_prepared.xml)
 
 ::This sets the code page to English (US) and forces CMD to output in English where applicable.
-set _ver=20250217
+set _ver=20250305
 chcp 437 >nul
 set "_PASSWORD_FOUND_FILE=%~dp0Result_!wifi_target!_PASSWORD.txt"
 
@@ -45,7 +45,7 @@ if not exist "!temp!\WBF_counter.txt" (
 set attack_counter_option=0
 ) else (
 set /p attack_counter_option=<"!temp!\WBF_counter.txt"
-)	
+)
 
 if not exist "wordlist.txt" (
 set wordlist_file=not_defined
@@ -324,7 +324,7 @@ if "!interface_id!" equ "not_defined" (
 )
 echo !_Red!
 netsh wlan disconnect interface="!interface_name!"
-echo !_cyan!Possible Wi-Fi Networks
+echo !_cyan!Possible Wi-Fi Networks !_CurSavePos!
 set /p ".=!_yellow!Scanning" <nul
 
 Set _Temp=0
@@ -347,6 +347,7 @@ for /f "skip=2 tokens=*" %%A in ('netsh wlan show networks mode^=bssid interface
 
 REM echo !_Wifi_String!
 call :extract_num "!_Wifi_String!" _Wifi_Count
+echo !_CurRestorePos!!_yellow!Available Networks: !_Green!!_Wifi_Count!!_Default!
 echo.
 set _Temp=0
 set _Count=0
@@ -361,23 +362,28 @@ for /f "usebackq tokens=1,* delims=:" %%A in ("!_file!") do (
 			REM  Removing, any number present in variable
 			REM  e.g: SSID, SSID 2, SSID 3 etc.
 			REM echo !_SSID!
-			set "_SSID=!_SSID:SSID=!"
+			@REM set "_SSID=!_SSID:SSID=!"
 			REM echo !_SSID!
-			for /L %%a in (0,1,9) do (set "_SSID=!_SSID:%%a=!")
+			@REM for /L %%a in (0,1,9) do (set "_SSID=!_SSID:%%a=!")
 			REM echo. !_SSID!.
-			set "_SSID=!_SSID: =!"
+			@REM set "_SSID=!_SSID: =!"
 			REM echo !_SSID!
 			
-			if "!_SSID!" == "" (
+			REM Improving algorithm to detect SSID, as previous one wasn't working due to a extra character
+			REM in different language systems...
+			REM Verifying if the string contains the word 'SSID' and do not contain the word 'BSSID'
+			if "!_SSID!" NEQ "!_SSID:SSID=!" (
+				if "!_SSID!" EQU "!_SSID:BSSID=!" (
 				REM Echo _SSID: %%A
 				Set _Temp=1
 				Set /A _Wifi_Index+=1
+				)
 			)
 			set _Count=0
 		)
 		
 		Set /A _Count+=1
-		if !_Count! GTR 8 (Set _Temp=0)
+		if !_Count! GTR 9 (Set _Temp=0)
 		
 		if !_Temp! == 1 (
 			set "_Temp_Value=%%~B"
@@ -408,6 +414,8 @@ for /f "usebackq tokens=1,* delims=:" %%A in ("!_file!") do (
 		)
 	)
 )
+
+timeout /t 2 >nul
 
 :Wifi_print
 cls
