@@ -25,7 +25,7 @@ if exist "importwifi_attempt.xml" (del importwifi_attempt.xml)
 if exist "importwifi_prepared.xml" (del importwifi_prepared.xml)
 
 ::This sets the code page to English (US) and forces CMD to output in English where applicable.
-set _ver=20250305
+set _ver=20250306
 chcp 437 >nul
 set "_PASSWORD_FOUND_FILE=%~dp0Result_!wifi_target!_PASSWORD.txt"
 
@@ -601,6 +601,7 @@ echo Target     : !wifi_target!>>"!_PASSWORD_FOUND_FILE!"
 echo At attempt : !password_count!>>"!_PASSWORD_FOUND_FILE!"
 echo Password   : !password!>>"!_PASSWORD_FOUND_FILE!"
 echo.>>"!_PASSWORD_FOUND_FILE!"
+start "" notepad "!_PASSWORD_FOUND_FILE!"
 pause
 goto :eof
 
