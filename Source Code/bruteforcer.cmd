@@ -619,7 +619,7 @@ for /l %%a in (1,1,3) do (
 	set /p ".=!_White!Attempts Left ^(!_Yellow!!attack_counter!!_White!^) ... !_Yellow!Trying..." <nul
 
 	set "_adapter_state=Disconnected"
-	powershell -command "Get-NetAdapter" | find /i "!interface_description!" | find /i "up" 2>nul >nul && (	set "_adapter_state=Connected") || (set "_adapter_state=Disconnected")
+	powershell -command "Get-NetAdapter" | find /i "!interface_description:~0,30!" | find /i "up" 2>nul >nul && (	set "_adapter_state=Connected") || (set "_adapter_state=Disconnected")
 	if /i "!_adapter_state!" == "Disconnected" (echo !_RED! :	FAILED)
 	if /i "!_adapter_state!" == "Connected" (
 		echo !_green! :	CONNECTED
