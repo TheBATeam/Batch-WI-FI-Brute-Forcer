@@ -25,7 +25,7 @@ REM Icarus (Batch Macros GOD) for suggesting use of escape sequences to enhance 
 REM For More Visit: www.batch-man.com
 
 REM Setting version information...
-Set _ver=20250106
+Set __ver=20250106
 
 REM Checking for various parameters of the function...
 If /i "%~1" == "--help" (goto :help)

@@ -25,7 +25,7 @@ if exist "importwifi_attempt.xml" (del importwifi_attempt.xml)
 if exist "importwifi_prepared.xml" (del importwifi_prepared.xml)
 
 ::This sets the code page to English (US) and forces CMD to output in English where applicable.
-set _ver=20250306
+set _ver=20250308
 chcp 437 >nul
 set "_PASSWORD_FOUND_FILE=%~dp0Result_!wifi_target!_PASSWORD.txt"
 
@@ -324,10 +324,11 @@ if "!interface_id!" equ "not_defined" (
 )
 echo !_Red!
 netsh wlan disconnect interface="!interface_name!"
-echo !_cyan!Possible Wi-Fi Networks !_CurSavePos!
-set /p ".=!_yellow!Scanning" <nul
+echo !_cyan!Possible Wi-Fi Networks
+set /p ".=!_yellow!Scanning ... " < nul
 
 Set _Temp=0
+set _Temp_count=0
 set _Wifi_Count=0
 set _Wifi_String=
 set "_file=!temp!\wifi_scan_!random!!random!!random!!random!.txt"
@@ -337,19 +338,25 @@ for /f "skip=2 tokens=*" %%A in ('netsh wlan show networks mode^=bssid interface
 	if /i "!_Temp!" == "0" (
 		set "_Wifi_String=%%A"
 		set _Temp=1
-	) Else (
-		set _tmp_str=%%A
-		if /i "%%A" NEQ "!_tmp_str:SSID=!" (set /p ".=."<nul)
-		echo.%%A >>"!_file!"
+	) else (
+		set "_tmp_str=%%A"
+		if /i "%%A" NEQ "!_tmp_str:SSID=!" (
+			if /i "%%A" EQU "!_tmp_str:BSSID=!" (
+				set /a _Temp_count+=1
+				set /p ".=!_Goto@x:x=0!!_yellow!Scanning ... !_cyan!!_Temp_count!" < nul
+			)
+		)
+		echo.%%A >> "!_file!"
 	)
 )
 
 
 REM echo !_Wifi_String!
 call :extract_num "!_Wifi_String!" _Wifi_Count
-echo !_CurRestorePos!!_yellow!Available Networks: !_Green!!_Wifi_Count!!_Default!
-echo.
+echo !_Goto@x:x=0!!_yellow!Scanning ... !_Green!!_Wifi_Count!!_Default!
+set /p ".=!_yellow!Processing ... " < nul
 set _Temp=0
+set _Temp_count=0
 set _Count=0
 set _Wifi_Index=-1
 set wifi_max_length=0
@@ -377,6 +384,8 @@ for /f "usebackq tokens=1,* delims=:" %%A in ("!_file!") do (
 				REM Echo _SSID: %%A
 				Set _Temp=1
 				Set /A _Wifi_Index+=1
+				set /a _Temp_count+=1
+				set /p ".=!_Goto@x:x=0!!_yellow!Processing ... !_cyan!!_Temp_count!" < nul
 				)
 			)
 			set _Count=0
@@ -415,7 +424,10 @@ for /f "usebackq tokens=1,* delims=:" %%A in ("!_file!") do (
 	)
 )
 
-timeout /t 2 >nul
+
+echo !_Goto@x:x=0!!_yellow!Processing ... !_Green!!_Temp_count!!_Default!
+echo !_Green!Done
+timeout /t 4 >nul
 
 :Wifi_print
 cls
